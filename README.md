@@ -82,6 +82,11 @@ build.bat          # Windows → backend\dist\CustomTrader.exe（配 packaging\w
 服务器地址，如 `https://your-server.com`），启动后原生窗口直接加载该服务
 器页面，不启动本地引擎。参见 `packaging/remote.url.example`。
 
+## 更多文档
+
+- [docs/MCP_GUIDE.md](docs/MCP_GUIDE.md) —— MCP（Model Context Protocol）接入：让 Claude Desktop 等 AI 客户端操作你的交易终端
+- [docs/DEPLOY_UBUNTU.md](docs/DEPLOY_UBUNTU.md) —— Ubuntu 服务器 7×24 部署（systemd + nginx HTTPS）
+
 ## 技术栈
 
 FastAPI · React 19 · antd 6 · ECharts · SQLite · vn.py 风格事件引擎 ·
