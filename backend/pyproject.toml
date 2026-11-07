@@ -1,0 +1,11 @@
+[project]
+name = "quant-trader-backend"
+version = "0.1.0"
+description = "Modern quant trading platform backend (FastAPI + event-driven core, inspired by vn.py)"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "network: tests requiring internet access (deselect with '-m \"not network\"')",
+]

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Env / secrets
+.env
+.env.local
+
+# 运行时数据目录（含数据库与全部密钥配置，绝不入库）
+# 根 data/ 与 backend/data/ 都是运行时数据目录：
+#   data/fuyao_config.json   fuyao API Key
+#   data/ctp_config.json     CTP 账号密码
+#   data/ai_config.json      AI API Key
+#   backend/data/auth_config.json  JWT 密钥与登录哈希
+data/
+backend/data/
+*.log
+*.log.*
+
+# 打包产物
+backend/build/
+backend/dist/
+backend/*.spec.bak
+dist/
+
+# IDE
+.idea/
+.vscode/
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+.zcode/
+.claude/
+opensource-delivery/

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14264a"/>
+      <stop offset="1" stop-color="#0b1120"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.25" cy="0.1" r="0.95">
+      <stop offset="0" stop-color="#1677ff" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#1677ff" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#1677ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="candle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aabff"/>
+      <stop offset="1" stop-color="#1677ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 深蓝黑底 + 顶部蓝色氛围光（呼应登录页与侧边栏） -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <rect width="64" height="64" rx="14" fill="url(#glow)"/>
+
+  <!-- 三根上升排列的 K 线：白 → 白 → 主题色渐变（主视觉） -->
+  <rect x="16.5" y="32" width="2" height="20" rx="1" fill="#ffffff" opacity="0.5"/>
+  <rect x="13" y="36" width="9" height="12" rx="2" fill="#ffffff" opacity="0.82"/>
+
+  <rect x="31" y="24" width="2" height="21" rx="1" fill="#ffffff" opacity="0.6"/>
+  <rect x="27.5" y="28" width="9" height="13" rx="2" fill="#ffffff" opacity="0.92"/>
+
+  <rect x="45.5" y="12" width="2" height="26" rx="1" fill="#69b1ff" opacity="0.9"/>
+  <rect x="42" y="17" width="9" height="16" rx="2" fill="url(#candle)"/>
+</svg>

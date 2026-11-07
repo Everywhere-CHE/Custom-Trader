@@ -1,0 +1,32 @@
+# QuantTrader 后端依赖（宽松下界）
+# 开发：pip install -r requirements.in
+# 生产/打包：pip install -r requirements.txt（精确锁定）
+#
+# 如需升级依赖：编辑此文件后重新跑 pip freeze > requirements.txt
+
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+pydantic>=2.7
+pydantic-settings>=2.3
+python-dotenv>=1.0
+tzdata>=2024.1
+requests>=2.32
+
+# 网关
+openctp-ctp>=6.7.7      # CTP 绑定（SimNow 兼容，纯 API，无 vnpy 依赖）
+akshare>=1.18           # 可选数据源（东方财富等公开接口）
+
+# 策略 / 回测
+numpy>=2.0
+
+# AI + MCP
+mcp>=1.2                # 官方 MCP SDK（FastMCP 服务器）
+anthropic>=0.40         # Anthropic API 客户端
+openai>=1.60            # OpenAI 兼容协议（DeepSeek/Kimi/Qwen/GLM/中继）
+bcrypt>=4.0             # 密码哈希（auth.py 直接导入）
+
+# 开发 / 测试
+pytest>=8
+httpx>=0.27
+websockets>=12pywebview>=5.0

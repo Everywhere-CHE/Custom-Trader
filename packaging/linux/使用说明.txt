@@ -1,0 +1,26 @@
+CustomTrader 量化交易终端（Linux 桌面版）
+==========================================
+
+安装：解压后在终端运行  ./install.sh
+启动：应用菜单「CustomTrader」/ 桌面图标 / 终端输入 custom-trader
+数据：保存在 ~/.local/share/custom-trader/data（数据库、配置、日志）
+卸载：./uninstall.sh（数据保留）
+
+首次登录账号 admin / admin（请登录后立即在设置页修改密码）。
+
+数据源配置（设置页）：
+- A股行情：STOCK 网关（无需配置，真实公开行情）
+- 期货/期权分时：FUYAO 网关，需填入同花顺 fuyao API Key
+- 期货交易：CTP 网关，填入期货公司前置地址与账号（留空 md_address 可只交易不看其行情）
+
+免责声明：本软件仅供学习研究，不构成投资建议，据此交易风险自负。
+
+原生窗口依赖（缺省自动降级为浏览器打开）：
+Debian/Ubuntu: sudo apt install python3-gi python3-gi-cairo gir1.2webkit2gtk-4.1
+
+────────────────────────────────────────
+客户端模式（连接远程服务器，可选）
+────────────────────────────────────────
+在安装目录新建 remote.url 文件（内容一行写服务器地址，如 https://your-server.com），
+重新启动即为该服务器的桌面客户端（不启动本地引擎）。
+删除 remote.url 恢复本机模式。

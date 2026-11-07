@@ -1,0 +1,610 @@
+/* 全局样式与主题 CSS 变量 —— 设计语言对齐 ARL-Next：
+   浅色 = 冰霜 Slate 布局 + 白卡片弥散阴影；深色 = 纯黑布局 + #111 卡片极简风。
+   仅亮 / 暗两种主题，主色固定由 --accent 变量驱动。 */
+
+/* Tailwind v4：仅引入 theme + utilities，不引入 preflight，
+   避免影响其余页面的 antd 组件样式。dark 变体挂接现有 data-theme。 */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  /* ARL 字体栈：让 Windows ClearType 接管渲染，消除 Web 字体发虚感 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas,
+    monospace;
+}
+
+:root {
+  --accent: #1677ff;
+  --accent-rgb: 22, 119, 255;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== 主题令牌 ===== */
+body[data-theme='light'] {
+  /* 国内市场惯例：红涨绿跌（低饱和度：柔粉涨 / 薄荷绿跌） */
+  --up-color: #f43f5e;
+  --down-color: #10b981;
+  --layout-bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --subcard-bg: #f8f9fa;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05),
+    0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --card-shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+  --panel-bg: #ffffff;
+  --chart-bg: #ffffff;
+  --chart-text: #555555;
+  --chart-grid: #eef2f7;
+  --border-color: #e2e8f0;
+  --text-primary: rgba(0, 0, 0, 0.85);
+  --text-secondary: rgba(0, 0, 0, 0.45);
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+}
+
+body[data-theme='dark'] {
+  --up-color: #fb7185;
+  --down-color: #34d399;
+  /* 暗色统一 ARL 蓝黑色系（与侧栏 #0b1120 同族），杜绝蓝黑/纯黑混用 */
+  --layout-bg: #0b1120;
+  --card-bg: #101828;
+  --card-border: #1f2b40;
+  --subcard-bg: #0d1526;
+  --card-shadow: none;
+  --card-shadow-hover: 0 0 0 1px #2a3a58, 0 8px 30px rgba(0, 0, 0, 0.55);
+  --panel-bg: #101828;
+  --chart-bg: #101828;
+  --chart-text: #8fa3c4;
+  --chart-grid: #1c2942;
+  --border-color: #1f2b40;
+  --text-primary: rgba(226, 232, 240, 0.92);
+  --text-secondary: rgba(148, 163, 184, 0.65);
+  background-color: #0b1120;
+  color: var(--text-primary);
+}
+
+/* ===== ARL 全局质感细节 ===== */
+
+/* 文本选中跟随主题色 */
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* 极致纤细滚动条，悬停点亮主题色 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--card-border);
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent);
+}
+
+/* 全局字重瘦身：消除刺眼 700 粗体，上限 500（ARL 护眼排版） */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.ant-statistic-title,
+.ant-statistic-content-value,
+strong,
+b {
+  font-weight: 500 !important;
+}
+
+.price-up {
+  color: var(--up-color);
+}
+
+.price-down {
+  color: var(--down-color);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas,
+    monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 底部面板的紧凑表格 */
+.compact-table .ant-table-cell {
+  padding: 4px 8px !important;
+  font-size: 12px;
+}
+
+/* 五档盘口行 */
+.depth-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.15s ease;
+}
+
+.depth-row:hover {
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+.log-line {
+  font-size: 12px;
+  font-family: Consolas, Monaco, monospace;
+  white-space: nowrap;
+}
+
+/* 自选列表行：悬停时显示移除按钮 */
+.watch-row .watch-remove {
+  visibility: hidden;
+}
+
+.watch-row:hover .watch-remove {
+  visibility: visible;
+}
+
+/* 新委托高亮动画 */
+@keyframes row-highlight {
+  0% {
+    background: rgba(var(--accent-rgb), 0.25);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+.order-row-new {
+  animation: row-highlight 1.5s ease-out forwards;
+}
+
+/* 状态标签过渡效果 */
+.order-status-tag {
+  transition: all 0.3s ease;
+}
+
+/* ===== 全局表格（ARL：表头冰霜灰 + 行悬浮主题色微光） ===== */
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background: var(--subcard-bg) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+  font-weight: 500 !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td {
+  background: rgba(var(--accent-rgb), 0.07) !important;
+  transition: background-color 0.2s ease;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
+  background: rgba(var(--accent-rgb), 0.06) !important;
+}
+
+[data-theme='dark'] .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td {
+  background: #1a1a1a !important;
+}
+
+[data-theme='dark'] .ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
+  background: #222222 !important;
+}
+
+/* 表格行悬停过渡 */
+.compact-table .ant-table-row {
+  transition: background 0.2s ease;
+}
+
+/* AI 助手 Markdown 回复样式 */
+.ai-markdown > *:first-child {
+  margin-top: 0;
+}
+
+.ai-markdown > *:last-child {
+  margin-bottom: 0;
+}
+
+.ai-markdown p {
+  margin: 4px 0;
+}
+
+.ai-markdown h1,
+.ai-markdown h2,
+.ai-markdown h3,
+.ai-markdown h4 {
+  margin: 10px 0 4px;
+  font-size: 14px;
+}
+
+.ai-markdown ul,
+.ai-markdown ol {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+
+.ai-markdown table {
+  border-collapse: collapse;
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.ai-markdown th,
+.ai-markdown td {
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+}
+
+.ai-markdown th {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+.ai-markdown code {
+  background: rgba(128, 128, 128, 0.15);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+}
+
+.ai-markdown pre {
+  background: rgba(128, 128, 128, 0.12);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px;
+  overflow: auto;
+  margin: 6px 0;
+}
+
+.ai-markdown pre code {
+  background: none;
+  padding: 0;
+}
+
+.ai-markdown blockquote {
+  border-left: 3px solid var(--border-color);
+  margin: 6px 0;
+  padding: 2px 10px;
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* ===== ARL 卡片体系 ===== */
+
+/* 玻璃面板内的 antd 表格：透明化底色，融入卡片 */
+.glass-table .ant-table,
+.glass-table .ant-table-container,
+.glass-table .ant-table-content,
+.glass-page .ant-table,
+.glass-page .ant-table-container,
+.glass-page .ant-table-content {
+  background: transparent;
+}
+
+/* 页内面板底色变量：让页内 inline var(--panel-bg) 自动跟随主题 */
+.glass-page {
+  --panel-bg: var(--subcard-bg);
+  --border-color: var(--card-border);
+  border-radius: 12px;
+}
+
+.glass-table .ant-table-thead > tr > th {
+  background: transparent !important;
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-bottom-color: var(--border-color);
+}
+
+.glass-table .ant-table-thead > tr > th::before {
+  display: none;
+}
+
+.glass-table .ant-table-tbody > tr > td {
+  border-bottom-color: var(--border-color);
+}
+
+.glass-table .ant-table-tbody > tr:hover > td {
+  background: rgba(var(--accent-rgb), 0.07) !important;
+}
+
+[data-theme='dark'] .glass-table .ant-table-tbody > tr:hover > td {
+  background: #1a1a1a !important;
+}
+
+/* 玻璃面板内的 antd Tabs：极简下划线（底部自选/持仓/委托仍在用） */
+.glass-tabs > .ant-tabs-nav {
+  margin-bottom: 0;
+  padding: 0 10px;
+  background: transparent;
+}
+
+.glass-tabs > .ant-tabs-nav::before {
+  border-bottom-color: var(--border-color) !important;
+}
+
+/* ===== glass-ui：全站 antd 组件 ARL 化（作用于 App 内容层） ===== */
+
+/* 默认按钮 → 白卡同语言 */
+.glass-ui .ant-btn-default {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.glass-ui .ant-btn-default:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* 主按钮 → 纯色主题色（跟随 accent） */
+.glass-ui .ant-btn-primary {
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.35);
+}
+.glass-ui .ant-btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+}
+.glass-ui .ant-btn-primary:disabled {
+  background: rgba(148, 163, 184, 0.3);
+  box-shadow: none;
+}
+
+/* 危险按钮柔和化 */
+.glass-ui .ant-btn-dangerous.ant-btn-default {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.35);
+  color: #f43f5e;
+}
+[data-theme='dark'] .glass-ui .ant-btn-dangerous.ant-btn-default {
+  background: rgba(244, 63, 94, 0.12);
+}
+.glass-ui .ant-btn-dangerous.ant-btn-primary {
+  background: #f43f5e;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3);
+}
+.glass-ui .ant-btn-dangerous.ant-btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, #f43f5e 85%, #000);
+}
+
+/* Card：透明头 + 小节标题风格 */
+.glass-ui .ant-card {
+  border-radius: 12px;
+}
+.glass-ui .ant-card-head {
+  border-bottom-color: var(--border-color);
+}
+.glass-ui .ant-card-head-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+.glass-ui .ant-card-extra {
+  color: var(--text-secondary);
+}
+
+/* 输入控件：卡片同色圆角 */
+.glass-ui .ant-input,
+.glass-ui .ant-input-number,
+.glass-ui .ant-input-affix-wrapper,
+.glass-ui .ant-picker,
+.glass-ui .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: var(--card-bg) !important;
+  border-radius: 8px;
+}
+[data-theme='dark'] .glass-ui .ant-select-dropdown,
+.glass-ui .ant-select-dropdown {
+  border-radius: 10px;
+}
+.glass-ui .ant-input-number-group-addon,
+.glass-ui .ant-input-group-addon {
+  background: rgba(var(--accent-rgb), 0.06);
+  border-color: var(--card-border);
+  color: var(--text-secondary);
+}
+
+/* Radio.Group 按钮组 → 分段 */
+.glass-ui .ant-radio-button-wrapper {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+.glass-ui .ant-radio-button-wrapper:not(:first-child)::before {
+  background: var(--card-border);
+}
+.glass-ui .ant-radio-button-wrapper-checked:not(:first-child)::before {
+  background: var(--accent) !important;
+}
+.glass-ui .ant-radio-button-wrapper-checked {
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  box-shadow: none;
+}
+
+/* Collapse */
+.glass-ui .ant-collapse {
+  background: var(--subcard-bg);
+  border-radius: 12px;
+  border-color: var(--card-border);
+}
+.glass-ui .ant-collapse > .ant-collapse-item {
+  border-color: var(--card-border);
+}
+
+/* Segmented（买入/卖出切换等） */
+.glass-ui .ant-segmented {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+[data-theme='dark'] .glass-ui .ant-segmented {
+  background: rgba(255, 255, 255, 0.08);
+}
+.glass-ui .ant-segmented-item-selected {
+  border-radius: 8px;
+}
+
+/* ===== 弹窗（Modal / Popover 统一质感） ===== */
+
+/* 遮罩：变暗 + 背景模糊 */
+.ant-modal-mask {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.45) !important;
+}
+[data-theme='dark'] .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* 弹窗本体 */
+.ant-modal .ant-modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+  padding: 20px 24px;
+}
+[data-theme='dark'] .ant-modal .ant-modal-content {
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.ant-modal .ant-modal-header {
+  background: transparent;
+}
+.ant-modal .ant-modal-title {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ant-modal .ant-modal-close {
+  background: transparent;
+  border-radius: 8px;
+  top: 14px;
+  inset-inline-end: 14px;
+}
+.ant-modal .ant-modal-close:hover {
+  background: rgba(var(--accent-rgb), 0.1);
+  color: var(--accent);
+}
+
+/* 弹窗内输入控件 */
+.ant-modal .ant-input,
+.ant-modal .ant-input-number,
+.ant-modal .ant-input-affix-wrapper,
+.ant-modal .ant-picker,
+.ant-modal .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: var(--card-bg) !important;
+  border-radius: 8px;
+}
+
+/* 弹窗内按钮：与 glass-ui 同语言 */
+.ant-modal .ant-btn-default {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  border-radius: 8px;
+}
+.ant-modal .ant-btn-default:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ant-modal .ant-btn-primary {
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.35);
+}
+.ant-modal .ant-btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--accent) 85%, #000);
+}
+.ant-modal .ant-btn-primary:disabled {
+  background: rgba(148, 163, 184, 0.3);
+  box-shadow: none;
+}
+.ant-modal .ant-btn-dangerous.ant-btn-default {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.35);
+  color: #f43f5e;
+}
+
+/* 弹窗内 Alert / 表单标签 */
+.ant-modal .ant-alert {
+  border-radius: 10px;
+}
+.ant-modal .ant-form-item .ant-form-item-label > label {
+  color: var(--text-secondary);
+}
+
+/* Popconfirm / 气泡卡片 */
+.ant-popover .ant-popover-inner {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+[data-theme='dark'] .ant-popover .ant-popover-inner {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* 弹窗内 Radio.Group 按钮组 */
+.ant-modal .ant-radio-button-wrapper {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+.ant-modal .ant-radio-button-wrapper-checked {
+  background: rgba(var(--accent-rgb), 0.1) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  box-shadow: none;
+}
+
+/* ===== 顶栏文字动作（hover 点亮主题色，ARL 同款） ===== */
+.header-text-action {
+  color: var(--text-primary);
+  transition: color 0.3s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.header-text-action:hover {
+  color: var(--accent);
+}
+
+/* 主题色色板 */
+.theme-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}

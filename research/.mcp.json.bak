@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "quant-trader": {
+      "command": "e:/123456/quant-trader/backend/.venv/Scripts/python.exe",
+      "args": ["e:/123456/quant-trader/backend/mcp_server/server.py"],
+      "env": {
+        "QT_API_BASE": "http://127.0.0.1:8000/api",
+        "AI_ALLOW_TRADING": "false"
+      }
+    }
+  }
+}
