@@ -11,7 +11,7 @@ sudo apt install -y python3.11 python3.11-venv nodejs nginx git
 # Node 18+（Ubuntu 22.04 自带版本较旧时，用 NodeSource）：
 # curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt install -y nodejs
 
-git clone https://github.com/<你的用户名>/custom-trader.git
+git clone https://github.com/Everywhere-CHE/Custom-Trader.git
 cd custom-trader
 ./install.sh          # 创建 backend/.venv、装依赖、构建前端
 ```
@@ -34,7 +34,7 @@ CTP 前置与账号（期货交易）。配置落盘在 `data/` 目录（自动�
 
 ## 4. systemd 常驻（推荐）
 
-`/etc/systemd/system/quant-trader.service`：
+`/etc/systemd/system/custom-trader.service`：
 
 ```ini
 [Unit]
@@ -55,8 +55,8 @@ WantedBy=multi-user.target
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now quant-trader
-journalctl -u quant-trader -f
+sudo systemctl enable --now custom-trader
+journalctl -u custom-trader -f
 ```
 
 ## 5. nginx HTTPS 反向代理（唯一对外端口）
@@ -67,8 +67,8 @@ journalctl -u quant-trader -f
 server {
     listen 443 ssl;
     server_name _;
-    ssl_certificate     /etc/nginx/ssl/quant-trader.crt;
-    ssl_certificate_key /etc/nginx/ssl/quant-trader.key;
+    ssl_certificate     /etc/nginx/ssl/custom-trader.crt;
+    ssl_certificate_key /etc/nginx/ssl/custom-trader.key;
 
     location /ws {
         proxy_pass http://127.0.0.1:8000;
